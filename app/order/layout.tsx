@@ -11,7 +11,9 @@ export default function OrderLayout({
       <div className="md:flex">
         <OrderSidebar />
 
-        <main className="flex-1 md:h-screen md:overflow-y-scroll p-5">{children}</main>
+        <main className="flex-1 md:h-screen md:overflow-y-scroll p-5">
+          {children}
+        </main>
 
         <OrderSummary />
       </div>
