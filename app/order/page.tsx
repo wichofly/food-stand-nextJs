@@ -1,5 +1,5 @@
-const OrderPage = () => {
-  return <div>OrderPage</div>;
-};
+import { redirect } from 'next/navigation';
 
-export default OrderPage;
+export default function OrderIndexPage() {
+  redirect('/order/coffee');
+}
