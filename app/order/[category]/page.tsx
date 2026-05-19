@@ -27,7 +27,7 @@ const OrderPage = async ({
   return (
     <>
       <div className="mb-4 text-4xl font-medium">
-        Category: {formattedCategory}
+        Menu: {formattedCategory}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
