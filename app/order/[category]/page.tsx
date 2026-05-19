@@ -1,5 +1,11 @@
-const OrderPage = ({ params }: { params: { category: string } }) => {
-  return <div>OrderPage: {params.category}</div>;
+const OrderPage = async ({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}) => {
+  const { category } = await params;
+
+  return <div>OrderPage: {category}</div>;
 };
 
 export default OrderPage;
