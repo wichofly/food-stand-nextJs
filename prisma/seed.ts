@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { categories } from './data/categories';
 import { products } from './data/products';
 import { PrismaPg } from '@prisma/adapter-pg';
