@@ -1,3 +1,4 @@
+import ProductCard from '@/components/products/ProductCard';
 import { prisma } from '@/src/lib/prisma';
 
 const getProducts = async (category: string) => {
@@ -18,10 +19,24 @@ const OrderPage = async ({
   params: Promise<{ category: string }>;
 }) => {
   const { category } = await params;
+  const formattedCategory =
+    category.charAt(0).toUpperCase() + category.slice(1); // Capitalize the first letter for display purposes
   const products = await getProducts(category);
   console.log(products);
 
-  return <div>OrderPage: {category}</div>;
+  return (
+    <>
+      <div className="mb-4 text-4xl font-medium">
+        Category: {formattedCategory}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </>
+  );
 };
 
 export default OrderPage;
