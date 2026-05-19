@@ -7,7 +7,7 @@ type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <div className="border bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
+    <div className="border border-gray-200 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
       <Image
         src={`/products/${product.image}.jpg`}
         alt={product.name}
