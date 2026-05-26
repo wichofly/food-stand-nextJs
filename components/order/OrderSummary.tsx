@@ -1,6 +1,7 @@
 'use client';
 
 import { useStore } from '@/src/store';
+import ProductDetails from './ProductDetails';
 
 const OrderSummary = () => {
   const order = useStore((state) => state.order);
@@ -12,14 +13,11 @@ const OrderSummary = () => {
       {order.length === 0 ? (
         <p className="text-center mt-5 text-gray-500">Empty order.</p>
       ) : (
-        <ul>
-          {order.map((item, index) => (
-            <li key={index} className="flex justify-between mt-2">
-              <span>{item.name}</span>
-              <span>{item.quantity}</span>
-            </li>
+        <div className="mt-5">
+          {order.map((item) => (
+            <ProductDetails key={item.id} item={item} />
           ))}
-        </ul>
+        </div>
       )}
     </aside>
   );

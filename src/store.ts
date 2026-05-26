@@ -7,9 +7,16 @@ interface Store {
   addToOrder: (product: Product) => void;
 }
 
-export const useStore = create<Store>(() => ({
+export const useStore = create<Store>((set) => ({
   order: [],
   addToOrder: (product) => {
-    console.log('Adding to order:', product);
+    const { categoryId, image, description, ...data } = product; // Exclude categoryId, image and description from the order item
+
+    set((state) => ({
+      order: [
+        ...state.order,
+        { ...data, quantity: 1, subtotal: 1 * product.price },
+      ],
+    }));
   },
 }));
