@@ -1,5 +1,6 @@
 import { Product } from '@/src/generated/prisma/client';
 import Image from 'next/image';
+import AddProductButton from './AddProductButton';
 
 type ProductCardProps = {
   product: Product;
@@ -23,9 +24,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <p className="mt-5 font-medium text-4xl text-amber-500">
           ${product.price.toFixed(2)}
         </p>
-        <button className="mt-5 bg-amber-500 text-white py-2 px-4 rounded-md hover:bg-amber-600 w-full transition-colors cursor-pointer">
-          Add to Cart
-        </button>
+
+        <AddProductButton product={product} />
       </div>
     </div>
   );
