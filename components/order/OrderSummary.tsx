@@ -2,16 +2,36 @@
 
 import { createOrder } from '@/actions/create-order-action';
 import { useStore } from '@/src/store';
+import { OrderSchema } from '@/src/zod';
+import { toast } from 'react-toastify';
 import ProductDetails from './ProductDetails';
 
 const OrderSummary = () => {
   const order = useStore((state) => state.order);
   const total = order.reduce((total, item) => total + item.subtotal, 0);
 
-  const handleCreateOrder = (formData: FormData) => {
-    console.log(formData.get('name'));
+  const handleCreateOrder = async (formData: FormData) => {
+    const data = {
+      name: formData.get('name'),
+    };
 
-    createOrder();
+    // Client-side validation
+    const result = OrderSchema.safeParse(data);
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        toast.error(issue.message);
+      });
+
+      return;
+    }
+
+    // Server action
+    const response = await createOrder(data);
+    if (response?.errors) {
+      response.errors.forEach((issue) => {
+        toast.error(issue.message);
+      });
+    }
   };
 
   return (
