@@ -5,12 +5,20 @@ import { OrderItem } from './types';
 interface Store {
   order: OrderItem[];
   addToOrder: (product: Product) => void;
+  increaseQuantity: (id: Product['id']) => void;
+  decreaseQuantity: (id: Product['id']) => void;
 }
 
 export const useStore = create<Store>((set, get) => ({
   order: [],
   addToOrder: (product) => {
-    const { categoryId, image, description, ...data } = product; // Exclude categoryId, image and description from the order item
+    const data: OrderItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: 1,
+      subtotal: product.price,
+    };
 
     let order: OrderItem[] = [];
 
@@ -25,14 +33,39 @@ export const useStore = create<Store>((set, get) => ({
           : item,
       );
     } else {
-      order = [
-        ...get().order,
-        { ...data, quantity: 1, subtotal: 1 * product.price },
-      ];
+      order = [...get().order, data];
     }
 
     set(() => ({
       order,
+    }));
+  },
+
+  increaseQuantity: (id) => {
+    set((state) => ({
+      order: state.order.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+              subtotal: (item.quantity + 1) * item.price,
+            }
+          : item,
+      ),
+    }));
+  },
+
+  decreaseQuantity: (id) => {
+    set((state) => ({
+      order: state.order.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity: item.quantity - 1,
+              subtotal: (item.quantity - 1) * item.price,
+            }
+          : item,
+      ),
     }));
   },
 }));
