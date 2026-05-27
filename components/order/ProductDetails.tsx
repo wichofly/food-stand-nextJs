@@ -11,6 +11,7 @@ type ProductDetailsProps = {
 const ProductDetails = ({ item }: ProductDetailsProps) => {
   const increaseQuantity = useStore((state) => state.increaseQuantity);
   const decreaseQuantity = useStore((state) => state.decreaseQuantity);
+  const removeItem = useStore((state) => state.removeItem);
   const disableDecrease = item.quantity === 1;
   const disableIncrease = item.quantity === 10;
 
@@ -20,7 +21,11 @@ const ProductDetails = ({ item }: ProductDetailsProps) => {
         <div className="flex justify-between items-center">
           <p className="text-lg font-medium">{item.name}</p>
 
-          <button type="button" onClick={() => console.log('Button deleted')}>
+          <button
+            type="button"
+            className="cursor-pointer"
+            onClick={() => removeItem(item.id)}
+          >
             <XCircleIcon className="h-6 w-6 text-red-500" />
           </button>
         </div>
