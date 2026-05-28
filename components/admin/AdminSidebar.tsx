@@ -1,9 +1,10 @@
-import Logo from "../ui/Logo";
+import Logo from '../ui/Logo';
+import AdminRoute from './AdminRoute';
 
 const adminNavigation = [
-  { url: '/admin/orders', name: 'Orders', blank: false },
-  { url: '/admin/products', name: 'Products', blank: false },
-  { url: '/admin/coffee', name: 'View Kiosk', blank: true },
+  { url: '/admin/orders', text: 'Orders', blank: false },
+  { url: '/admin/products', text: 'Products', blank: false },
+  { url: '/order/coffee', text: 'View Kiosk', blank: false },
 ];
 
 const AdminSidebar = () => {
@@ -15,7 +16,11 @@ const AdminSidebar = () => {
           Admin Panel
         </p>
 
-        <nav className="flex flex-col"></nav>
+        <nav className="flex flex-col">
+          {adminNavigation.map((link) => (
+            <AdminRoute key={link.url} link={link} />
+          ))}
+        </nav>
       </div>
     </>
   );
