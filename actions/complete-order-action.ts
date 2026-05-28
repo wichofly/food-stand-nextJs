@@ -1,6 +1,7 @@
 'use server';
 
 import { prisma } from '@/src/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export const completeOrder = async (formData: FormData) => {
   const orderId = formData.get('order_id')!;
@@ -15,6 +16,8 @@ export const completeOrder = async (formData: FormData) => {
         orderReadyAt: new Date(Date.now()),
       },
     });
+
+    revalidatePath('/admin/orders');
   } catch (error) {
     console.error('Error completing order:', error);
   }
