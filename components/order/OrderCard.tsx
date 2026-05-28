@@ -1,3 +1,4 @@
+import { completeOrder } from '@/actions/complete-order-action';
 import { OrderWithProducts } from '@/src/types';
 
 type OrderCardProps = {
@@ -40,7 +41,8 @@ const OrderCard = ({ order }: OrderCardProps) => {
         </div>
       </dl>
 
-      <form>
+      <form action={completeOrder}>
+        <input type="hidden" name="order_id" value={order.id} /> {/* Pass the order ID to the server action */}
         <input
           type="submit"
           value="Select Order completed"
