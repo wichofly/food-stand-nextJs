@@ -8,6 +8,7 @@ import ProductDetails from './ProductDetails';
 
 const OrderSummary = () => {
   const order = useStore((state) => state.order);
+  const clearOrder = useStore((state) => state.clearOrder);
   const total = order.reduce((total, item) => total + item.subtotal, 0);
 
   const handleCreateOrder = async (formData: FormData) => {
@@ -34,6 +35,9 @@ const OrderSummary = () => {
         toast.error(issue.message);
       });
     }
+
+    toast.success('Order created successfully!');
+    clearOrder();
   };
 
   return (
