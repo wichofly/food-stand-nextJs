@@ -2,6 +2,7 @@ import ProductsPagination from '@/components/products/ProductsPagination';
 import ProductTable from '@/components/products/ProductTable';
 import Heading from '@/components/ui/Heading';
 import { prisma } from '@/src/lib/prisma';
+import { redirect } from 'next/navigation';
 
 const productCount = async () => {
   const count = await prisma.product.count();
@@ -34,6 +35,8 @@ const ProductsPage = async ({
   const page = Math.max(1, currentPage);
   const pageSize = 10;
 
+  if (page < 1) redirect('/admin/products');
+
   const productsData = getProducts(page, pageSize);
   const totalProductsData = productCount();
   const [products, totalProducts] = await Promise.all([
@@ -42,7 +45,7 @@ const ProductsPage = async ({
   ]);
   const totalPages = Math.ceil(totalProducts / pageSize); // Calculate total pages based on total products and page size
 
-  console.log(totalPages);
+  if (page > totalPages) redirect('/admin/products');
 
   return (
     <>
