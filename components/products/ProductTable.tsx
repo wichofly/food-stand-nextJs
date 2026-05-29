@@ -1,8 +1,10 @@
-import { Product } from '@/src/generated/prisma/client';
+import { Category, Product } from '@/src/generated/prisma/client';
 import Link from 'next/link';
 
 type ProductTableProps = {
-  products: Product[];
+  products: ({
+    category: Category;
+  } & Product)[];
 };
 
 const ProductTable = ({ products }: ProductTableProps) => {
@@ -47,7 +49,7 @@ const ProductTable = ({ products }: ProductTableProps) => {
                       {`$${product.price.toFixed(2)}`}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {product.categoryId}
+                      {product.category.name}
                     </td>
 
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

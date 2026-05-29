@@ -4,7 +4,9 @@ import { prisma } from '@/src/lib/prisma';
 
 const getProducts = async () => {
   const products = await prisma.product.findMany({
-    where: {},
+    include: {
+      category: true,
+    },
   });
 
   return products;
