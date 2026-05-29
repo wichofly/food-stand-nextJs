@@ -1,9 +1,23 @@
+import ProductTable from '@/components/products/ProductTable';
 import Heading from '@/components/ui/Heading';
+import { prisma } from '@/src/lib/prisma';
 
-const ProductsPage = () => {
+const getProducts = async () => {
+  const products = await prisma.product.findMany({
+    where: {},
+  });
+
+  return products;
+};
+
+const ProductsPage = async () => {
+  const products = await getProducts();
+
   return (
     <>
       <Heading>Manage Products</Heading>
+
+      <ProductTable products={products} />
     </>
   );
 };
