@@ -1,10 +1,8 @@
-import { Category, Product } from '@/src/generated/prisma/client';
+import { ProductsWithCategory } from '@/app/admin/products/page';
 import Link from 'next/link';
 
 type ProductTableProps = {
-  products: ({
-    category: Category;
-  } & Product)[];
+  products: ProductsWithCategory;
 };
 
 const ProductTable = ({ products }: ProductTableProps) => {

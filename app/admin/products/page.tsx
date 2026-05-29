@@ -12,6 +12,8 @@ const getProducts = async () => {
   return products;
 };
 
+export type ProductsWithCategory = Awaited<ReturnType<typeof getProducts>>; // Type for products with category included
+
 const ProductsPage = async () => {
   const products = await getProducts();
 
