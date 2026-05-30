@@ -17,3 +17,17 @@ export const OrderSchema = z.object({
 export const SearchProductSchema = z.object({
   search: z.string().trim().min(1, 'Search query is required'),
 });
+
+export const ProductSchema = z.object({
+  name: z.string().trim().min(1, 'Product name is required'),
+  price: z
+    .string()
+    .trim()
+    .transform((value) => parseFloat(value))
+    .refine((value) => value > 0, 'Price must be a positive number'),
+  categoryId: z
+    .string()
+    .trim()
+    .transform((value) => parseFloat(value))
+    .refine((value) => value > 0, 'Category is required'),
+});

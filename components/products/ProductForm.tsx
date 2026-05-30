@@ -15,6 +15,7 @@ const ProductForm = async () => {
         </label>
         <input
           id="name"
+          name="name"
           type="text"
           placeholder="Product Name"
           className="block w-full px-4 py-2 bg-slate-100 border border-slate-300 rounded-md"
@@ -27,6 +28,7 @@ const ProductForm = async () => {
         </label>
         <input
           id="price"
+          name="price"
           type="text"
           placeholder="Product Price"
           className="block w-full px-4 py-2 bg-slate-100 border border-slate-300 rounded-md"
@@ -34,11 +36,12 @@ const ProductForm = async () => {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="category" className="text-slate-800">
+        <label htmlFor="categoryId" className="text-slate-800">
           Category:
         </label>
         <select
-          id="category"
+          id="categoryId"
+          name="categoryId"
           className="block w-full px-4 py-2 bg-slate-100 border border-slate-300 rounded-md"
         >
           <option value="">Select a category</option>
