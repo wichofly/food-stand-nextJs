@@ -1,10 +1,9 @@
-import React from 'react';
 import ProductForm from './ProductForm';
 
 const AddProductForm = () => {
   return (
     <div className="bg-white mt-10 px-5 py-10 rounded-md shadow-md max-w-3xl mx-auto">
-      <form>
+      <form className="space-y-5">
         <ProductForm />
         
         <input
