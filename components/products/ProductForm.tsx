@@ -1,4 +1,5 @@
 import { prisma } from '@/src/lib/prisma';
+import ImageUpload from './ImageUpload';
 
 const getCategories = async () => {
   return await prisma.category.findMany();
@@ -36,6 +37,19 @@ const ProductForm = async () => {
       </div>
 
       <div className="space-y-2">
+        <label htmlFor="description" className="text-slate-800">
+          Description:
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Product Description"
+          className="block w-full px-4 py-2 bg-slate-100 border border-slate-300 rounded-md"
+          rows={4}
+        />
+      </div>
+
+      <div className="space-y-2">
         <label htmlFor="categoryId" className="text-slate-800">
           Category:
         </label>
@@ -52,6 +66,8 @@ const ProductForm = async () => {
           ))}
         </select>
       </div>
+
+      <ImageUpload />
     </>
   );
 };

@@ -1,14 +1,20 @@
 'use client';
 
+import { createProduct } from '@/actions/create-product-action';
 import { ProductSchema } from '@/src/zod';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 const AddProductForm = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+
   const handleSubmit = async (formData: FormData) => {
     const data = {
       name: formData.get('name'),
+      description: formData.get('description'),
       price: formData.get('price'),
       categoryId: formData.get('categoryId'),
+      image: formData.get('image'),
     };
 
     const result = ProductSchema.safeParse(data);
@@ -21,7 +27,17 @@ const AddProductForm = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    console.log(result.data);
+    const response = await createProduct(result.data);
+
+    if (response?.errors) {
+      response.errors.forEach((issue) => {
+        toast.error(issue.message);
+      });
+      return;
+    }
+
+    toast.success('Product created successfully!');
+    router.push('/admin/products');
   };
 
   return (
