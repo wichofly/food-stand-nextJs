@@ -1,16 +1,19 @@
 import { Product } from '@/src/generated/prisma/client';
 import Image from 'next/image';
 import AddProductButton from './AddProductButton';
+import { getImagePath } from '@/src/utils';
 
 type ProductCardProps = {
   product: Product;
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const imagePath = getImagePath(product.image);
+  
   return (
     <div className="border border-gray-200 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
       <Image
-        src={`/products/${product.image}.jpg`}
+        src={imagePath}
         alt={product.name}
         width={400}
         height={500}
