@@ -1,5 +1,6 @@
 'use client';
 
+import { getImagePath } from '@/src/utils';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -9,7 +10,7 @@ type UploadSuccessInfo = {
   secure_url?: string;
 };
 
-const ImageUpload = () => {
+const ImageUpload = ({ image }: { image: string | undefined }) => {
   const [imageUrl, setImageUrl] = useState('');
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
@@ -62,7 +63,25 @@ const ImageUpload = () => {
             </label>
           </div>
 
-          <input type="hidden" name="image" value={imageUrl} />
+          {image && !imageUrl && (
+            <div className="space-y-2">
+              <label>Actual Image:</label>
+              <div className="relative w-64 h-64">
+                <Image
+                  src={getImagePath(image)}
+                  fill
+                  alt="Image"
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
+            </div>
+          )}
+
+          <input
+            type="hidden"
+            name="image"
+            defaultValue={imageUrl ? imageUrl : image}
+          />
         </>
       )}
     </CldUploadWidget>

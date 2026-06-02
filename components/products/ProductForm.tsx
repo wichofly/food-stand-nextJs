@@ -76,7 +76,7 @@ const ProductForm = async ({ product }: ProductFormProps) => {
         </select>
       </div>
 
-      <ImageUpload />
+      <ImageUpload image={product?.image} />
     </>
   );
 };
