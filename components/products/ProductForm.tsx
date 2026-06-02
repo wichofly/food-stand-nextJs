@@ -1,3 +1,4 @@
+import { Product } from '@/src/generated/prisma/client';
 import { prisma } from '@/src/lib/prisma';
 import ImageUpload from './ImageUpload';
 
@@ -5,7 +6,11 @@ const getCategories = async () => {
   return await prisma.category.findMany();
 };
 
-const ProductForm = async () => {
+type ProductFormProps = {
+  product?: Product;
+};
+
+const ProductForm = async ({ product }: ProductFormProps) => {
   const categories = await getCategories();
 
   return (
@@ -20,6 +25,7 @@ const ProductForm = async () => {
           type="text"
           placeholder="Product Name"
           className="block w-full px-4 py-2 bg-slate-100 border border-slate-300 rounded-md"
+          defaultValue={product?.name}
         />
       </div>
 
@@ -33,6 +39,7 @@ const ProductForm = async () => {
           type="text"
           placeholder="Product Price"
           className="block w-full px-4 py-2 bg-slate-100 border border-slate-300 rounded-md"
+          defaultValue={product?.price}
         />
       </div>
 
@@ -46,6 +53,7 @@ const ProductForm = async () => {
           placeholder="Product Description"
           className="block w-full px-4 py-2 bg-slate-100 border border-slate-300 rounded-md"
           rows={4}
+          defaultValue={product?.description}
         />
       </div>
 
@@ -57,6 +65,7 @@ const ProductForm = async () => {
           id="categoryId"
           name="categoryId"
           className="block w-full px-4 py-2 bg-slate-100 border border-slate-300 rounded-md"
+          defaultValue={product?.categoryId}
         >
           <option value="">Select a category</option>
           {categories.map((category) => (
@@ -67,7 +76,7 @@ const ProductForm = async () => {
         </select>
       </div>
 
-      <ImageUpload />
+      <ImageUpload image={product?.image} />
     </>
   );
 };
