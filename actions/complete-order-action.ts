@@ -18,6 +18,7 @@ export const completeOrder = async (formData: FormData) => {
     });
 
     revalidatePath('/admin/orders');
+    revalidatePath('/orders');
   } catch (error) {
     console.error('Error completing order:', error);
   }

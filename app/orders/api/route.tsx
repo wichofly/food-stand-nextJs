@@ -22,3 +22,8 @@ export async function GET() {
 
   return Response.json(orders);
 }
+
+/**
+ * With the actual state of the project it is not necessary to have this API route, but I will keep it here for future reference in case I need to fetch the orders from the client side.
+ * Data is obtained directly from the Server Component at app/orders/page.tsx.
+ */
