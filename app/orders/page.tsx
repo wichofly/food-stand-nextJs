@@ -37,17 +37,20 @@ const OrdersPage = async () => {
 
       <Logo />
 
-      <form action={refreshOrders} className="flex justify-center mt-5">
+      <form
+        action={refreshOrders}
+        className="mt-5 w-full max-w-5xl mx-auto px-4 sm:px-0 flex justify-center"
+      >
         <button
           type="submit"
-          className="bg-amber-500 text-white text-center w-full lg:w-auto text-xl px-10 py-3 font-medium rounded-md hover:bg-amber-600 transition cursor-pointer"
+          className="bg-amber-500 text-white text-center w-full sm:w-auto text-base sm:text-lg md:text-xl px-6 sm:px-10 py-3 font-medium rounded-md hover:bg-amber-600 transition cursor-pointer"
         >
           Refresh orders
         </button>
       </form>
 
       {orders.length ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5 max-w-5xl mx-auto mt-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5 max-w-5xl mx-auto my-5 px-4 xl:px-0">
           {orders.map((order) => (
             <LatestOrderItem key={order.id} order={order} />
           ))}

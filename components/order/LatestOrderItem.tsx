@@ -6,21 +6,24 @@ type LatestOrderItemProps = {
 
 const LatestOrderItem = ({ order }: LatestOrderItemProps) => {
   return (
-    <div className="bg-white shadow p-5 space-y-5 rounded-md">
-      <p className="text-lg font-semibold text-slate-600">
+    <div className="bg-white shadow p-4 sm:p-5 space-y-4 sm:space-y-5 rounded-md">
+      <p className="text-base sm:text-lg font-semibold text-slate-600 wrap-break-word">
         Customer: {order.name}
       </p>
 
       <ul
-        className="divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500"
+        className="divide-y divide-gray-200 border-t border-gray-200 text-sm sm:text-base font-medium text-gray-500"
         role="list"
       >
         {order.orderProducts.map((orderProduct) => (
-          <li key={orderProduct.id} className="flex py-6 text-lg">
-            <span className="font-semibold mr-1">
+          <li
+            key={orderProduct.id}
+            className="flex flex-wrap items-start gap-x-1 gap-y-1 py-4 sm:py-6 text-base sm:text-lg"
+          >
+            <span className="font-semibold mr-1 shrink-0">
               ({orderProduct.quantity}) {''}
             </span>
-            {orderProduct.product.name}
+            <span className="wrap-break-word">{orderProduct.product.name}</span>
           </li>
         ))}
       </ul>
