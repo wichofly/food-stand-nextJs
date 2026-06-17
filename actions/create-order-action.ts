@@ -27,5 +27,8 @@ export const createOrder = async (data: unknown) => {
     });
   } catch (error) {
     console.log(error);
+    return {
+      errors: [{ message: 'An error occurred while creating the order.' }],
+    };
   }
 };

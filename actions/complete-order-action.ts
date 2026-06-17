@@ -7,7 +7,7 @@ export const completeOrder = async (formData: FormData) => {
   const orderId = formData.get('order_id')!;
 
   try {
-    await prisma.order.updateMany({
+    await prisma.order.update({
       where: {
         id: +orderId,
       },
