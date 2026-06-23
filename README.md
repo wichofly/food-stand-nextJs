@@ -1,36 +1,132 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Food Stand Next.js
 
-## Getting Started
+Web application for managing orders in a food stand/cafeteria.
 
-First, run the development server:
+It includes an order-taking flow by category, an admin panel for products, order management, and Postgres persistence with Prisma.
+
+## Project Stack
+
+- Next.js 16 (App Router)
+- React 19 + TypeScript
+- Tailwind CSS 4
+- Prisma 7 + adapter `@prisma/adapter-pg`
+- Neon/Postgres (via `DATABASE_URL`)
+- Zustand (local order state)
+- Zod (validation)
+- Cloudinary (`next-cloudinary`) for image uploads
+
+## What Has Been Implemented So Far
+
+### 1. Ordering Flow (Customer)
+
+- Order entry route at `/order` with redirect to a default category (`/order/coffee`).
+- Category navigation and product listing by category.
+- Order sidebar with global state using Zustand:
+  - Add products to the order.
+  - Increase/decrease quantity.
+  - Remove items.
+  - Clear order when finished.
+- Order creation in the database with `Order -> OrderProducts` relation.
+
+### 2. Product Administration Panel
+
+- Server-side paginated product listing.
+- Product search.
+- Product creation with validation.
+- Editing existing products.
+- Image upload with Cloudinary.
+
+### 3. Order Management in Admin
+
+- Pending orders view (`status = false`).
+- Marking an order as completed (updates `status` and `orderReadyAt`).
+- Route revalidation to refresh data without manually reloading the entire app.
+
+### 4. Public Ready Orders Screen
+
+- `/orders` view with latest ready orders (`status = true`), sorted by preparation time.
+- Refresh button to revalidate content.
+
+### 5. Database and Domain Model
+
+- Models implemented in Prisma:
+  - `Category`
+  - `Product`
+  - `Order`
+  - `OrderProducts`
+- Versioned migrations in `prisma/migrations`.
+- Initial seed with sample categories and products.
+
+## Main Structure
+
+- `app/`: routes and layouts (customer, admin, and ready orders)
+- `actions/`: server actions to create/update products and create/complete orders
+- `components/`: UI and domain components (`admin`, `order`, `products`, `ui`)
+- `src/lib/prisma.ts`: shared Prisma client
+- `src/store.ts`: global order state with Zustand
+- `src/zod/`: validation schemas
+- `prisma/`: schema, migrations, and seed
+
+## Environment Variables
+
+Create a `.env` file with at least:
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DB_NAME"
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET="your_upload_preset"
+```
+
+Note: `DATABASE_URL` is required. If missing, the app will fail when Prisma initializes.
+
+## How to Run the Project
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run Prisma migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+3. (Optional) Seed sample data:
+
+```bash
+npx tsx prisma/seed.ts
+```
+
+Warning: the seed script deletes and recreates categories and products.
+
+4. Start the development environment:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Application available at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev`: start Next.js in development mode.
+- `npm run build`: build for production.
+- `npm run start`: run the production build.
+- `npm run lint`: run ESLint.
 
-## Learn More
+## Current Status
 
-To learn more about Next.js, take a look at the following resources:
+The project already has a functional MVP:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Category-based order taking.
+- Persistent orders and order-item details.
+- Back-office for product administration.
+- Pending and ready order workflow.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Recommended next phase: authentication/authorization for admin routes, and automated tests for critical flows.
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The project is live on **Vercel**:
+[Food Stand NextJs](https://food-stand-next-js.vercel.app/)
